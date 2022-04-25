@@ -1,0 +1,19 @@
+local_costmap:
+  global_frame: map
+  robot_base_frame: base_link
+  update_frequency: 5.0
+  publish_frequency: 5.0
+  rolling_window: true
+  width: 5.5
+  height: 5.5
+  resolution: 0.1
+  transform_tolerance: 0.5
+  
+  plugins:
+#  - {name: obstacle_layer,          type: "costmap_2d::VoxelLayer"}
+   - {name: obstacle_layer,      type: "costmap_2d::ObstacleLayer"}
+   - {name: slope_layer,         type: "costmap_2d::SlopeLayer"}
+   - {name: inflation_layer,         type: "costmap_2d::InflationLayer"}
+#  - {name: static_layer,        type: "costmap_2d::StaticLayer"}
+#  - {name: costmap_prohibition_layer,        type: "costmap_prohibition_layer_namespace::CostmapProhibitionLayer"}
+#  - {name: gridlayer,    type: "simple_layer_namespace::GridLayer"}c

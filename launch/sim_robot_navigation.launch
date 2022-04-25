@@ -1,0 +1,17 @@
+<launch>
+  <!-- Run the map server -->
+  <node name="multi_map_server" pkg="multi_map_server" type="multi_map_server" args="$(arg map_file) $(arg map_file1)" output="screen" />
+  <!-- node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" output="screen" / -->
+  <param name="/use_sim_time" value="true" />
+  <!-- Run the move base -->
+  <include file="$(find robot_navigation)/launch/move_base.launch" />
+  
+  <!--- Run AMCL <include file="$(find amcl)/examples/amcl_diff.launch" />-->
+  <include file="$(find amcl)/examples/amcl_diff.launch">
+     <remap from="scan" to="scan"/>
+  </include>
+  <!-- node name="rviz" pkg="rviz" type="rviz" args="-d $(find robot_navigation)/rviz/nav.rviz" / -->
+  <node pkg="tf" type="static_transform_publisher" name="map_to_map2" 
+    args="7.0 0.0 0.0 0.0 0.0 0.0 /map /map2 100" />
+
+</launch>

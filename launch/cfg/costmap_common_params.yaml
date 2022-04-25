@@ -1,0 +1,45 @@
+
+#---standard pioneer footprint---
+#---(in meters)---
+
+footprint: [[0.3, 0.35], [0.3, -0.35], [-0.3, -0.35], [-0.3, 0.35]] #机器人外轮廓（书写格式四象限顺时针逆时针都可）
+# footprint: [[0.1, 0.1], [0.1, -0.1], [-0.1, -0.1], [-0.1, 0.1]]
+footprint_padding: 0.00
+
+transform_tolerance: 0.2
+
+always_send_full_costmap: true
+
+obstacle_layer:
+ enabled: true
+ obstacle_range: 3.0  #只有障碍物在这个范围内才会被标记 设置机器人检测障碍物的最大范围，意思是说超过该范围的障碍物，并不进行检测，只有靠近到该范围内才把该障碍物当作影响路径规划和移动的障碍物;
+ raytrace_range: 3.0  #这个范围内不存在的障碍物都会被清除 在机器人移动过程中，实时清除代价地图上的障碍物的最大范围，更新可自由移动的空间数据。假如设置该值为3米，那么就意味着在3米内的障碍物，本来开始时是有的，但是本次检测却没有了，那么就需要在代价地图上来更新，将旧障碍物的空间标记为可以自由移动的空间。
+ inflation_radius: 0.1 #0.3
+ track_unknown_space: flase  #如果设置为false，那么地图上代价值就只分为致命碰撞和自由区域两种，如果设置为true，那么就分为致命碰撞，自由区域和未知区域三种。意思是说假如该参数设置为false的话，就意味着地图上的未知区域也会被认为是可以自由移动的区域，这样在进行全局路径规划时，可以把一些未探索的未知区域也来参与到路径规划，如果你需要这样的话就将该参数设置为false。不过一般情况未探索的区域不应该当作可以自由移动的区域，因此一般将该参数设置为true;
+ combination_method: 1
+
+ observation_sources: laser_scan_sensor
+ laser_scan_sensor: {data_type: LaserScan, topic: /scan, marking: true, clearing: true}
+
+
+inflation_layer:
+  enabled:              true
+  cost_scaling_factor:  10.0  # exponential rate at which the obstacle cost drops off (default: 10)
+  inflation_radius:     0.3  # max. distance from an obstacle at which costs are incurred for planning paths. 0.6
+
+static_layer:
+  enabled:              true
+  map_topic:            "/map"
+
+
+slope_layer:
+  enabled: true
+  obstacle_range: 5.0 
+  raytrace_range: 5.0 
+  inflation_radius: 0.3
+  track_unknown_space: flase 
+
+  combination_method: 1
+  slope_sources: pointcloud2_sensor
+  pointcloud2_sensor: {data_type: PointCloud2, topic: /velodyne_points, marking: true, clearing: true}
+#  pointcloud2_sensor: {data_type: LaserScan, topic: /scan, marking: true, clearing: true}
