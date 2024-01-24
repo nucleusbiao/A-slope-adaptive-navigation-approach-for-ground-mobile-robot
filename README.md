@@ -15,4 +15,8 @@ This is the code of paper A-slope-adaptive-navigation-approach-for-ground-mobile
 
 
 Demo Video<br/>
-![](slopeAdaptive.gif)
+![](slopeAdaptive2.gif)
+
+Full Video  
+[Watch the video on YouTube](https://youtu.be/8UtWBK3Y6cc)
+
